@@ -1,8 +1,8 @@
 #ifndef CHARACTER_H_
 #define CHARACTER_H_
-#include "ZorkUL.h"
+#include "item.h"
 #include <fstream>
-#include <string>
+#include <QString>
 using namespace std;
 #include <vector>
 using std::vector;
@@ -10,13 +10,13 @@ using std::vector;
 
 class Character {
 public:
-    string description;
+    QString description;
          vector < Item > itemsInCharacter;
     //void addItem(Item *item);
 
-	Character(string description);
-	string shortDescription();
-    string longDescription();
+    Character(QString description);
+    QString shortDescription();
+    QString longDescription();
 };
 
 
