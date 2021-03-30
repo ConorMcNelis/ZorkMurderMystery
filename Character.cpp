@@ -1,16 +1,17 @@
 #include "Character.h"
+#include <QMessageBox>
 
-Character::Character(string description) {
+Character::Character(QString description) {
 	this->description = description;
 }
 /*void Character::addItem(Item &item) {
     itemsInCharacter.push_back(item);
 }*/
 
-string Character::longDescription()
+QString Character::longDescription()
 {
-    string ath = "\\Users\\Conor\\Documents\\College Work\\Event Driven Programming\\Zork_first_version\\";
-  string ret = this->description;
+    QString ath = "\\Users\\Conor\\Documents\\College Work\\Event Driven Programming\\Zork_first_version\\";
+  QString ret = this->description;
   ret += ":\n";
   ifstream inFile{};
   inFile.open("\\Users\\Conor\\Documents\\College Work\\Event Driven Programming\\Zork_first_version\\Text\\TestText.txt");
@@ -19,10 +20,11 @@ string Character::longDescription()
         cerr << "Unable to open the file TestText.txt";
         exit(1);
     }
-    for (std::string line; std::getline(inFile, line); )
+    for (string line; getline(inFile, line); )
     {
         //std::cout << line << std::endl;
-        ret += line + "\n";
+        QString Line = QString::fromStdString(line);
+        ret += Line + "\n";
     }
     inFile.close();
   return ret;
