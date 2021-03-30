@@ -35,6 +35,7 @@ bool Command::isUnknown() {
 
 /**
  * Return true if the command has a second word.
+ /
  */
 bool Command::hasSecondWord() {
 	return (!secondWord.empty());
