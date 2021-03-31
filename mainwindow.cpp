@@ -41,23 +41,19 @@ void MainWindow::on_ReturnButton_clicked()
 }
 
 void MainWindow::on_GoNorthButton_clicked(){
-    Command* north = parser.getCommand("go north");
-    goRoom(*north);
+    go("north");
 }
 
 void MainWindow::on_GoEastButton_clicked(){
-    Command* east = parser.getCommand("go east");
-    goRoom(*east);
+    go("east");
 }
 
 void MainWindow::on_GoWestButton_clicked(){
-    Command* west = parser.getCommand("go west");
-    goRoom(*west);
+    go("west");
 }
 
 void MainWindow::on_GoSouthButton_clicked(){
-    Command* south = parser.getCommand("go south");
-    goRoom(*south);
+    go("south");
 }
 
 void MainWindow::createRooms()  {
@@ -239,37 +235,23 @@ void MainWindow::printHelp() {
 
 */
 
-void MainWindow::goRoom(Command command) {
-    if (!command.hasSecondWord()) {
-        ui->Descriptions->setText("incomplete input\n");
-        return;
-    }
 
-    std::string direction = command.getSecondWord();
-
-    // Try to leave current room.
-    Room* nextRoom = currentRoom->nextRoom(direction);
-
-    if (nextRoom == NULL)
-        ui->Descriptions->setText("underdefined input \n");
-    else {
-        currentRoom = nextRoom;
-        ui->Descriptions->setText(currentRoom->longDescription()+"\n");
-    }
-}
-
-/*
-QString MainWindow::go(QString direction) {
+void MainWindow::go(string direction) {
     //Make the direction lowercase
     //transform(direction.begin(), direction.end(), direction.begin(),:: tolower);
     //Move to the next room
     Room* nextRoom = currentRoom->nextRoom(direction);
     if (nextRoom == NULL)
-        return("direction null");
+        int x = 1;
+        //return("direction null");
     else
     {
-        currentRoom = nextRoom;
-        return currentRoom->longDescription();
+       currentRoom = nextRoom;
+       ui->Descriptions->setText(currentRoom->longDescription()+"\n");
+      // return currentRoom->longDescription();
     }
 }
-*/
+
+
+
+
