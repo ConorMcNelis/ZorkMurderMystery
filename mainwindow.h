@@ -7,14 +7,12 @@
 #include <QLabel>
 #include <QInputDialog>
 #include "Command.h"
-#include "Parser.h"
 #include "Room.h"
 #include "item.h"
 #include "Character.h"
 #include "main.h"
 //#include "MainCharacter.h"
 #include <iostream>
-//#include <filesystem>
 #include <QString>
 using namespace std;
 
@@ -29,19 +27,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    Parser parser;
     Room *currentRoom;
-    //Command *command;
    // MainCharacter *player;
     void createRooms();
     void printWelcome();
-    //bool processCommand(Command command);
     void printHelp();
-    //void goRoom(Command command);
     void createItems();
     void displayItems();
     void createCharacters();
     void displayCharacters();
+    void go(string direction);
 
 
 private slots:
