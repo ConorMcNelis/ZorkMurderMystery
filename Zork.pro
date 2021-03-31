@@ -10,10 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     Character.cpp \
-    Command.cpp \
-    CommandWords.cpp \
     MainCharacter.cpp \
-    Parser.cpp \
     Room.cpp \
     item.cpp \
     main.cpp \
@@ -21,10 +18,7 @@ SOURCES += \
 
 HEADERS += \
     Character.h \
-    Command.h \
-    CommandWords.h \
     MainCharacter.h \
-    Parser.h \
     Room.h \
     item.h \
     main.h \
