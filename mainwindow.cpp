@@ -9,7 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
     ui->GameWidget->setCurrentIndex(0);
-
 }
 
 MainWindow::~MainWindow()
@@ -56,26 +55,34 @@ void MainWindow::on_GoSouthButton_clicked(){
     go("south");
 }
 
-void MainWindow::createRooms()  {
+void MainWindow::on_ExamineButton_clicked(){
+    vector<Item> Items = currentRoom->getItemList();
+    for(int i = 0; i < currentRoom->numberOfItems(); i++)
+        if (ui->ItemList->currentText() == Items[i].getShortDescription())
+            ui->Descriptions->setText(Items[i].getExamination());
+}
 
+void MainWindow::createRooms()  {
     //MainCharacter *player;
     Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
     Item *soup, *rustedSword, *rock, *stick;
     Character *Gardener;
 
-   // player = new MainCharacter("Player");
-
+    //Create Items
     soup = new Item("soup", 10, 2);
-        soup->setLongDescription("On the oaken table you see a bowl of soup, steaming and filling the room with a pungent odour. ");
+        soup->setLongDescription("On the oaken table you see a bowl of soup, steaming and filling the room with a pungent odour.");
+        soup->setExamination(readFile(":/CharacterLongDescriptions/Text/SoupExamination.txt"));
     rustedSword = new Item("sword", 10, 2);
-        rustedSword->setLongDescription("At the east side of the room a rusted sword is jammed into a crack in the wall. There must have been a fight here. ");
+        rustedSword->setLongDescription(readFile(":/CharacterLongDescriptions/Text/Sword.txt"));
     stick = new Item("stick", 1, 11);
         stick->setLongDescription("A broken treebranch lays snapped in the grass, it could be used as a crude weapon. ");
+        ui->Inventory->addItem(stick->getShortDescription());
     rock = new Item("rock", 2, 22);
         rock->setLongDescription("A heavy rock is wedged in the dirt, it could fit in the palm of your hand. ");
 
+    //create Characters
     Gardener = new Character("The Gardener");
-        //ui->Descriptions->setText(Gardener->longDescription());
+        ui->Descriptions->setText(Gardener->longDescription());
 
     a = new Room("The Main Lobby:");
         a->addItem(stick);
@@ -108,132 +115,15 @@ void MainWindow::createRooms()  {
     i->setExits(NULL, d, NULL, NULL);
     j->setExits(NULL, NULL, f, NULL);
 
-        currentRoom = a;
-        printWelcome();
+       currentRoom = a;
+       printWelcome();
 }
 
-/**
- *  Main play routine.  Loops until end of play.
- */
-/*
-void MainWindow::play() {
-    printWelcome();
-
-    // Enter the main command loop.  Here we repeatedly read commands and
-    // execute them until the ZorkUL game is over.
-
-    bool finished = false;
-    while (!finished) {
-        // Create pointer to command and give it a command.
-        //Command* command = parser.getCommand();
-        // Pass dereferenced command and check for end of game.
-        //finished = processCommand(*command);
-        // Free the memory allocated by "parser.getCommand()"
-        //   with ("return new Command(...)")
-       // delete command;
-    }
-    ui->Descriptions->setText("\nend\n");
-}
-*/
 void MainWindow::printWelcome() {
     ui->Descriptions->setText("start\n"
                               "'info' for help\n\n"+
                               currentRoom->longDescription()+"\n");
 }
-
-/**
- * Given a command, process (that is: execute) the command.
- * If this command ends the ZorkUL game, true is returned, otherwise false is
- * returned.
- */
-/*
-bool MainWindow::processCommand(Command command) {
-    if (command.isUnknown()) {
-        ui->Descriptions->setText("invalid input\n");
-        return false;
-    }
-
-    QString commandWord = command.getCommandWord();
-    if (commandWord.compare("info") == 0)
-        printHelp();
-
-    else if (commandWord.compare("map") == 0)
-        {
-        ui->Descriptions->setText("        [j]        \n"
-                                  "         |         \n"
-                                  "         |         \n"
-                                  "[h] --- [f] --- [g]\n"
-                                  "         |         \n"
-                                  "         |         \n"
-                                  "[c] --- [a] --- [b]\n"
-                                  "         |         \n"
-                                  "         |         \n"
-                                  "[i] --- [d] --- [e]\n");
-
-        }
-
-    else if (commandWord.compare("go") == 0)
-        goRoom(command);
-
-    else if (commandWord.compare("take") == 0)
-    {
-        if (!command.hasSecondWord()) {
-        ui->Descriptions->setText("incomplete input\n");
-        }
-        else
-         if (command.hasSecondWord()) {
-        ui->Descriptions->setText("you're trying to take " + command.getSecondWord()+"\n");
-        int location = currentRoom->isItemInRoom(command.getSecondWord());
-        if (location  < 0 )
-            ui->Descriptions->setText("item is not in room \n");
-        else{
-            ui->Descriptions->setText("item is in room\n"
-"index number "+QString::number(location)+"\n\n"+
-currentRoom->longDescription()+"\n");
-     }
-        }
-    }
-
-    else if (commandWord.compare("put") == 0)
-    {
-
-    }
-    /*
-    {
-    if (!command.hasSecondWord()) {
-        cout << "incomplete input"\n");;
-        }
-        else
-            if (command.hasSecondWord()) {
-            cout << "you're adding " + command.getSecondWord() \n");;
-            itemsInRoom.push_Back;
-        }
-    }
-/
-    else if (commandWord.compare("quit") == 0) {
-        if (command.hasSecondWord())
-            ui->Descriptions->setText("overdefined input\n");
-        else
-            return true; /**signal to quit/
-    }
-    else if (commandWord.compare("inventory") == 0){
-        if (command.hasSecondWord())
-            ui->Descriptions->setText("overdefined input");
-        //else
-     //       cout << player->getInventory();
-    }
-    return false;
-}
-*/
-/** COMMANDS **/
-/*
-void MainWindow::printHelp() {
-    ui->Descriptions->setText("valid inputs are\n");
-    parser.showCommands();
-
-}
-
-*/
 
 
 void MainWindow::go(string direction) {
@@ -247,11 +137,36 @@ void MainWindow::go(string direction) {
     else
     {
        currentRoom = nextRoom;
+       vector<Item> Items = currentRoom->getItemList();
        ui->Descriptions->setText(currentRoom->longDescription()+"\n");
+       ui->ItemList->clear();
+       for(int i = 0; i < currentRoom->numberOfItems(); i++)
+           ui->ItemList->addItem(Items[i].getShortDescription());
       // return currentRoom->longDescription();
     }
 }
 
+QString MainWindow::readFile(QString fileLocation){
+    QString ret = "";
+    QFile file(fileLocation);
+    if (!file.exists())
+        qDebug() << file.fileName() << "does not exist";
+     else if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        cerr << "read in";
+    QTextStream in(&file);
+    in.seek(0);
+    while (!in.atEnd()){
+        QString line = in.readLine();
+        ret = ret + line + "\n";
+    }
+    file.close();
+    }
+    else
+    {
+        qDebug() << "Couldn't open file";
+    }
+    return ret;
+}
 
 
 

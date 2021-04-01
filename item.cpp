@@ -2,7 +2,6 @@
 
 Item::Item (QString inDescription, int inWeightGrams, float inValue/**, int weaponCheck*/) {
 	description = inDescription;
-    QString longDescription = inDescription;
 	setWeight(inWeightGrams);
 	value = inValue;
 	/**weaponCheck(isWeapon);*/
@@ -50,4 +49,15 @@ QString Item::getLongDescription()
 {
     return longDescription;
 }
+
+void Item::setExamination(QString examinationString)
+{
+    Examination = examinationString;
+}
+
+QString Item::getExamination()
+{
+    return Examination;
+}
+
 

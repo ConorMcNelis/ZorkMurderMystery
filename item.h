@@ -10,6 +10,7 @@ class Item {
 private:
     QString description;
     QString longDescription;
+    QString Examination;
 	int weightGrams;
 	float value;
 	bool weaponCheck;
@@ -20,6 +21,8 @@ public:
     QString getShortDescription();
     void setLongDescription(QString RoomDescription);
     QString getLongDescription();
+    void setExamination(QString examinationString);
+    QString getExamination();
 	int getWeight();
 	void setWeight(int weightGrams);
 	float getValue();

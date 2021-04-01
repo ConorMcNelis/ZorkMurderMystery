@@ -1,5 +1,4 @@
 #include "Character.h"
-#include <QMessageBox>
 
 Character::Character(QString description) {
 	this->description = description;
@@ -10,23 +9,25 @@ Character::Character(QString description) {
 
 QString Character::longDescription()
 {
-    QString ath = "\\Users\\Conor\\Documents\\College Work\\Event Driven Programming\\Zork_first_version\\";
   QString ret = this->description;
   ret += ":\n";
-  ifstream inFile{};
-  inFile.open("\\Users\\Conor\\Documents\\College Work\\Event Driven Programming\\Zork_first_version\\Text\\TestText.txt");
-  //programmer defined exception (I think)
-    if (!inFile){
-        cerr << "Unable to open the file TestText.txt";
-        exit(1);
-    }
-    for (string line; getline(inFile, line); )
-    {
-        //std::cout << line << std::endl;
-        QString Line = QString::fromStdString(line);
-        ret += Line + "\n";
-    }
-    inFile.close();
+  QFile file(":/CharacterLongDescriptions/Text/TestText.txt");
+  if (!file.exists())
+      qDebug() << file.fileName() << "does not exist";
+   else if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
+      cerr << "read in";
+  QTextStream in(&file);
+  in.seek(0);
+  while (!in.atEnd()){
+      QString line = in.readLine();
+      ret = ret + line + "\n";
+  }
+  file.close();
+  }
+  else
+  {
+      qDebug() << "Couldn't open file";
+  }
   return ret;
 }
 

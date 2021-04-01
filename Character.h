@@ -3,6 +3,10 @@
 #include "item.h"
 #include <fstream>
 #include <QString>
+#include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
+#include <QDebug>
 using namespace std;
 #include <vector>
 using std::vector;
