@@ -71,6 +71,10 @@ int Room::numberOfItems() {
     return itemsInRoom.size();
 }
 
+vector<Item> Room::getItemList(){
+    return itemsInRoom;
+}
+
 int Room::isItemInRoom(QString inQString)
 {
     int sizeItems = (itemsInRoom.size());
