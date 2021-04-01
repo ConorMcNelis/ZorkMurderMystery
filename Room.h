@@ -27,6 +27,7 @@ public:
     void addItem(Item *inItem);
     QString displayItem();
     int isItemInRoom(QString inQString);
+    vector<Item> getItemList();
     void removeItemFromRoom(int location);
 };
 
