@@ -6,6 +6,9 @@
 #include <QStackedWidget>
 #include <QLabel>
 #include <QInputDialog>
+#include <QDebug>
+#include <QFile>
+#include <QTextStream>
 #include "Command.h"
 #include "Room.h"
 #include "item.h"
@@ -28,6 +31,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     Room *currentRoom;
+    QFile *descriptionText;
    // MainCharacter *player;
     void createRooms();
     void printWelcome();
@@ -37,7 +41,7 @@ public:
     void createCharacters();
     void displayCharacters();
     void go(string direction);
-
+    QString readFile(QString fileLocation);
 
 private slots:
 
@@ -56,10 +60,14 @@ private slots:
     void on_GoWestButton_clicked();
 
     void on_GoSouthButton_clicked();
+
+    void on_ExamineButton_clicked();
+
+    //void on_ItemList_clicked();
+
 private:
     Ui::MainWindow *ui;
     //MainWindow();
-    void play();
     void goRoom(Command command);
 };
 #endif // MAINWINDOW_H
