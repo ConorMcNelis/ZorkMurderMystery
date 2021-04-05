@@ -1,6 +1,8 @@
 #include "Room.h"
 #include "Command.h"
 
+Room::Room(){
+}
 
 Room::Room(QString description) {
 	this->description = description;
@@ -22,7 +24,7 @@ QString Room::shortDescription() {
 }
 
 QString Room::longDescription() {
-    QString plusItemsDescription = description;
+    QString plusItemsDescription = shortDescription();
     for (int i = 0; i < (int)itemsInRoom.size(); i++)
         plusItemsDescription = plusItemsDescription + itemsInRoom[i].getLongDescription();
     return "room = " + plusItemsDescription + "\n" + displayItem() + exitString();
