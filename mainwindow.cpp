@@ -56,22 +56,48 @@ void MainWindow::on_GoSouthButton_clicked(){
 }
 
 void MainWindow::on_ExamineButton_clicked(){
-    vector<Item> Items = currentRoom->getItemList();
-    for(int i = 0; i < currentRoom->numberOfItems(); i++)
+    Items = currentRoom->getItemList();
+    Characters = a->getCharacterList();
+    it = Characters.begin();
+    for(int i = 0; i < currentRoom->numberOfItems(); i++){
         if (ui->ItemList->currentText() == Items[i].getShortDescription())
             ui->Descriptions->setText(Items[i].getExamination());
+        else if(i < Characters.size())
+            if (ui->ItemList->currentText() == Characters[i].shortDescription()){
+                it += i;
+                currentCharacter = &(*it);
+                MainLobbyMethod(currentCharacter);
+            }
+    }
+}
+
+void MainWindow::on_Option1_clicked(){
+    ui->DialogueBox->setText(currentCharacter->getDialogue(2));
+}
+
+void MainWindow::on_Option2_clicked(){
+    ui->DialogueBox->setText(currentCharacter->getDialogue(3));
+}
+
+void MainWindow::on_Option3_clicked(){
+    ui->DialogueBox->setText(currentCharacter->getDialogue(4));
+}
+
+void MainWindow::on_BackButton_clicked(){
+    ui->GameWidget->setCurrentIndex(2);
 }
 
 void MainWindow::createRooms()  {
     //MainCharacter *player;
-    Room *a, *b, *c, *d, *e, *f, *g, *h, *i, *j;
+    Room *b, *c, *d, *e, *f, *g, *h, *i, *j;
     Item *soup, *rustedSword, *rock, *stick;
-    Character *Gardener;
+    Character *Gardener, *Butler;
+
 
     //Create Items
     soup = new Item("soup", 10, 2);
         soup->setLongDescription("On the oaken table you see a bowl of soup, steaming and filling the room with a pungent odour.");
-        soup->setExamination(readFile(":/CharacterLongDescriptions/Text/SoupExamination.txt"));
+        soup->setExamination(readFile(":/Examinations/Text/Examinations/SoupExamination.txt"));
     rustedSword = new Item("sword", 10, 2);
         rustedSword->setLongDescription(readFile(":/CharacterLongDescriptions/Text/Sword.txt"));
     stick = new Item("stick", 1, 11);
@@ -82,12 +108,16 @@ void MainWindow::createRooms()  {
 
     //create Characters
     Gardener = new Character("The Gardener");
-        ui->Descriptions->setText(Gardener->longDescription());
+        Gardener->setDialogueLocation(":/Examinations/Dialogue/Text/Examinations/Character Dialogue/Gardener Dialogue.txt");
+    Butler = new Character("The Butler");
+        Butler->setDialogueLocation(":/Examinations/Dialogue/Text/Examinations/Character Dialogue/Butler Dialogue.txt");
 
-    a = new Room("The Main Lobby:");
+    a = new MainLobby("The Main Lobby:");
         a->addItem(stick);
         a->addItem(rock);
-    b = new Room("");
+        a->addCharacter(Gardener);
+        a->addCharacter(Butler);
+    b = new Room("b");
     c = new Room("c");
     d = new Room("d");
         d->addItem(new Item("xx", 3, 33));
@@ -115,8 +145,9 @@ void MainWindow::createRooms()  {
     i->setExits(NULL, d, NULL, NULL);
     j->setExits(NULL, NULL, f, NULL);
 
-       currentRoom = a;
-       printWelcome();
+       currentRoom = b;
+
+       go("west");
 }
 
 void MainWindow::printWelcome() {
@@ -132,18 +163,33 @@ void MainWindow::go(string direction) {
     //Move to the next room
     Room* nextRoom = currentRoom->nextRoom(direction);
     if (nextRoom == NULL)
-        int x = 1;
-        //return("direction null");
+        ui->Descriptions->setText("There's nothing in that direction\n"+currentRoom->longDescription()+"\n");
     else
     {
+        //ui->Descriptions->setText("Current Room: "+currentRoom->shortDescription()+"\nNext Room: "+nextRoom->shortDescription());
        currentRoom = nextRoom;
-       vector<Item> Items = currentRoom->getItemList();
        ui->Descriptions->setText(currentRoom->longDescription()+"\n");
-       ui->ItemList->clear();
-       for(int i = 0; i < currentRoom->numberOfItems(); i++)
-           ui->ItemList->addItem(Items[i].getShortDescription());
-      // return currentRoom->longDescription();
+       if (currentRoom->shortDescription() != "" ){
+           //ui->Descriptions->setText("This isn't the main lobby");
+           vector<Item> Items = currentRoom->getItemList();
+           ui->ItemList->clear();
+           for(int i = 0; i < currentRoom->numberOfItems(); i++)
+               ui->ItemList->addItem(Items[i].getShortDescription());
+       }
+       else{
+           MainLobby *CurrentRoom = a;
+           vector<Character> Characters = CurrentRoom->getCharacterList();
+           ui->Descriptions->setText(CurrentRoom->longDescription()+"\n");
+           ui->ItemList->clear();
+           for(int i = 0; i < CurrentRoom->numberOfCharacters(); i++)
+               ui->ItemList->addItem(Characters[i].shortDescription());
+       }
     }
+}
+
+void MainWindow::MainLobbyMethod(Character *suspect){
+    ui->GameWidget->setCurrentIndex(3);
+    ui->DialogueBox->setText(suspect->getDialogue(0));
 }
 
 QString MainWindow::readFile(QString fileLocation){
@@ -167,6 +213,7 @@ QString MainWindow::readFile(QString fileLocation){
     }
     return ret;
 }
+
 
 
 
