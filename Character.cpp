@@ -7,6 +7,10 @@ Character::Character(QString description) {
     itemsInCharacter.push_back(item);
 }*/
 
+QString Character::shortDescription(){
+    return description;
+}
+
 QString Character::longDescription()
 {
   QString ret = this->description;
@@ -31,6 +35,28 @@ QString Character::longDescription()
   return ret;
 }
 
+void Character::setDialogueLocation(QString location){
+    dialogueLocation = location;
+}
+
+QString Character::getDialogueLocation(){
+    return dialogueLocation;
+}
+
+QString Character::getDialogue(int choice){
+    QFile file(dialogueLocation);
+    QTextStream stream(&file);
+    int line = 0;
+    if(file.open(QIODevice::ReadOnly))
+        while(!stream.atEnd()) {
+            if(line == choice)
+                dialogue = stream.readLine();
+            else
+                stream.readLine();
+            line++;
+        }
+    return dialogue;
+}
 
 
 
