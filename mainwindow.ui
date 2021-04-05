@@ -30,9 +30,9 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
-    <widget class="QWidget" name="page">
+    <widget class="QWidget" name="OpenMenu">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);</string>
      </property>
@@ -117,7 +117,7 @@ background-color: rgb(0, 0, 0);</string>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_2">
+    <widget class="QWidget" name="HowToPlay">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(204, 142, 255);</string>
      </property>
@@ -156,7 +156,7 @@ font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_3">
+    <widget class="QWidget" name="MainGame">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 0, 0);</string>
      </property>
@@ -311,6 +311,116 @@ background-color: rgb(0, 0, 0);</string>
       </property>
       <property name="text">
        <string>Examine</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="MainLobby">
+     <widget class="QLabel" name="DialogueBox">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>230</y>
+        <width>291</width>
+        <height>251</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>220</y>
+        <width>151</width>
+        <height>261</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>480</y>
+        <width>361</width>
+        <height>161</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Where were you at 9:48pm last night?&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Did you ever have any issues with Mr Dead?&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Tell me a little bit about yourself&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::RichText</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Option2">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>550</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Option1">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>520</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Option3">
+      <property name="geometry">
+       <rect>
+        <x>310</x>
+        <y>580</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>3</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="BackButton">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>610</y>
+        <width>80</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Back</string>
       </property>
      </widget>
     </widget>
