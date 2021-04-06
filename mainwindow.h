@@ -9,9 +9,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QTextStream>
-#include "Command.h"
 #include "Room.h"
-#include "MainLobby.h"
 #include "item.h"
 #include "Character.h"
 #include "main.h"
@@ -31,10 +29,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    MainLobby *a;
     Room *currentRoom;
     QFile *descriptionText;
-    Character *currentCharacter;
    // MainCharacter *player;
     void createRooms();
     void printWelcome();
@@ -44,8 +40,8 @@ public:
     void createCharacters();
     void displayCharacters();
     void go(string direction);
-    void MainLobbyMethod(Character *suspect);
     QString readFile(QString fileLocation);
+    Item *Inventory [10];
 
 private slots:
 
@@ -67,22 +63,11 @@ private slots:
 
     void on_ExamineButton_clicked();
 
-    void on_Option1_clicked();
 
-    void on_Option2_clicked();
-
-    void on_Option3_clicked();
-
-    void on_BackButton_clicked();
-
-    //void on_ItemList_clicked();
+    void on_ItemList_currentIndexChanged(int x);
 
 private:
     Ui::MainWindow *ui;
     //MainWindow();
-    void goRoom(Command command);
-    vector<Item> Items;
-    vector<Character> Characters;
-    vector<Character>::iterator it;
 };
 #endif // MAINWINDOW_H
