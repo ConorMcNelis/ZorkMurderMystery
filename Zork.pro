@@ -35,8 +35,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    Text/Examinations/Character Dialogue/Butler Dialogue.txt \
+    Text/Examinations/Character Dialogue/Gardener Dialogue.txt \
+    Text/Examinations/SoupExamination.txt \
     Text/SoupLongDescription.txt \
     Zork_first_version/Text/TestText.txt
 
 RESOURCES += \
+    Text.qrc \
     Text.qrc
