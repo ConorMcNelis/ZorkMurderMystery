@@ -1,7 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "Command.h"
 #include "Room.h"
 #include "item.h"
 #include "Character.h"
@@ -14,6 +13,11 @@ class Main {
 
 public:
     Main();
+
+    ~Main()
+    {
+
+    }
 };
 
 #endif // MAIN_H

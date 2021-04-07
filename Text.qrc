@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Text/Soup.txt</file>
+        <file>Text/SoupExamination.txt</file>
+        <file>Text/Sword.txt</file>
+        <file>Text/TestText.txt</file>
+        <file>Text/Examinations/SoupExamination.txt</file>
+        <file>Text/Examinations/Character Dialogue/Butler Dialogue.txt</file>
+        <file>Text/Examinations/Character Dialogue/Gardener Dialogue.txt</file>
+    </qresource>
+</RCC>

@@ -56,18 +56,47 @@ void MainWindow::on_GoSouthButton_clicked(){
 }
 
 void MainWindow::on_ExamineButton_clicked(){
+    bool exists = false;
+    bool Icheck = false;
+    int counter = 0;
     Items = currentRoom->getItemList();
     Characters = a->getCharacterList();
     it = Characters.begin();
-    for(int i = 0; i < currentRoom->numberOfItems(); i++){
+    for(int i = 0; i < currentRoom->numberOfItems(); i++)
+    {
         if (ui->ItemList->currentText() == Items[i].getShortDescription())
-            ui->Descriptions->setText(Items[i].getExamination());
-        else if(i < Characters.size())
+        {
+            ui->Descriptions->setText(Items[i].getLongDescription());
+            Icheck = true;
+        }
+        else if(i < (int)Characters.size())
             if (ui->ItemList->currentText() == Characters[i].shortDescription()){
                 it += i;
                 currentCharacter = &(*it);
                 MainLobbyMethod(currentCharacter);
             }
+
+        for(int x = 0; x < 4; x++)
+        {
+            if(Items[i].getShortDescription() == Inventory[i])
+            {
+               exists = true;
+            }
+        }
+    }
+
+    if(exists == false && Icheck == true)
+    {
+        counter++;
+        if(counter == 4)
+        {
+            ui->Descriptions->setText("Your Inventory is full!");
+        }
+        else
+        {
+            Inventory[counter] = ui->ItemList->currentText();
+            ui->InventoryList->addItem(Inventory[counter]);
+        }
     }
 }
 
@@ -102,7 +131,6 @@ void MainWindow::createRooms()  {
         rustedSword->setLongDescription(readFile(":/CharacterLongDescriptions/Text/Sword.txt"));
     stick = new Item("stick", 1, 11);
         stick->setLongDescription("A broken treebranch lays snapped in the grass, it could be used as a crude weapon. ");
-        ui->Inventory->addItem(stick->getShortDescription());
     rock = new Item("rock", 2, 22);
         rock->setLongDescription("A heavy rock is wedged in the dirt, it could fit in the palm of your hand. ");
 
