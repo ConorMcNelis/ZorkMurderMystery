@@ -101,15 +101,15 @@ void MainWindow::on_ExamineButton_clicked(){
 }
 
 void MainWindow::on_Option1_clicked(){
-    ui->DialogueBox->setText(currentCharacter->getDialogue(2));
+    ui->DialogueBox->setText(currentCharacter->getDialogue(1));
 }
 
 void MainWindow::on_Option2_clicked(){
-    ui->DialogueBox->setText(currentCharacter->getDialogue(3));
+    ui->DialogueBox->setText(currentCharacter->getDialogue(2));
 }
 
 void MainWindow::on_Option3_clicked(){
-    ui->DialogueBox->setText(currentCharacter->getDialogue(4));
+    ui->DialogueBox->setText(currentCharacter->getDialogue(3));
 }
 
 void MainWindow::on_BackButton_clicked(){
