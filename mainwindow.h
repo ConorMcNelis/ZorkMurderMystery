@@ -36,16 +36,9 @@ public:
     QFile *descriptionText;
     Character *currentCharacter;
    // MainCharacter *player;
-    void createRooms();
-    void printWelcome();
-    void printHelp();
-    void createItems();
-    void displayItems();
-    void createCharacters();
-    void displayCharacters();
-    void go(string direction);
-    void MainLobbyMethod(Character *suspect);
-    QString readFile(QString fileLocation);
+
+private:
+    Ui::MainWindow *ui;
 
 private slots:
 
@@ -75,14 +68,20 @@ private slots:
 
     void on_BackButton_clicked();
 
-    //void on_ItemList_clicked();
-
-private:
-    Ui::MainWindow *ui;
-    //MainWindow();
+protected:
     void goRoom(Command command);
     vector<Item> Items;
     vector<Character> Characters;
     vector<Character>::iterator it;
+    void createRooms();
+    void printWelcome();
+    void printHelp();
+    void createItems();
+    void displayItems();
+    void createCharacters();
+    void displayCharacters();
+    void go(string direction);
+    void MainLobbyMethod(Character *suspect);
+    QString readFile(QString fileLocation);
 };
 #endif // MAINWINDOW_H
