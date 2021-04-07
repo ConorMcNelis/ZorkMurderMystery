@@ -14,18 +14,19 @@ using std::vector;
 
 class Character {
 public:
-    QString description;
-    QString dialogue;
-    QString dialogueLocation;
     //vector < Item > itemsInCharacter;
     //void addItem(Item *item);
-
+    friend class MainLobby;
     Character(QString description);
     QString shortDescription();
     QString longDescription();
     QString getDialogue(int choice);
     QString getDialogueLocation();
     void setDialogueLocation(QString location);
+private:
+    QString description;
+    QString dialogue;
+    QString dialogueLocation;
 };
 
 
