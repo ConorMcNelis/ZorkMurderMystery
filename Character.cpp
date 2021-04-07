@@ -3,9 +3,6 @@
 Character::Character(QString description) {
 	this->description = description;
 }
-/*void Character::addItem(Item &item) {
-    itemsInCharacter.push_back(item);
-}*/
 
 QString Character::shortDescription(){
     return description;

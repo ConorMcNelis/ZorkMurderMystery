@@ -15,7 +15,7 @@ void MainLobby::addCharacter(Character *character){
 
 Character MainLobby::getCharacter(QString name){
     for (int i = 0; i<numberOfCharacters(); i++){
-        if (name == CharactersInRoom[i].shortDescription())
+        if (name == CharactersInRoom[i].description)
             return CharactersInRoom[i];
     }
     Character *failsafe = new Character("error");
@@ -32,7 +32,7 @@ QString MainLobby::displayCharacter() {
     else if (CharactersInRoom.size() > 0) {
        int x = (0);
         for (int n = sizeCharacters; n > 0; n--) {
-            tempQString = tempQString + CharactersInRoom[x].shortDescription() + "  " ;
+            tempQString = tempQString + CharactersInRoom[x].description + "  " ;
             x++;
             }
         }

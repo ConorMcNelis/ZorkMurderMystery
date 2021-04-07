@@ -12,6 +12,7 @@ class MainLobby : public Room
         QString exitString();
         vector <Item> itemsInRoom;
         vector <Character> CharactersInRoom;
+        friend class mainwindow;
 
     public:
         MainLobby(QString description);
@@ -22,6 +23,7 @@ class MainLobby : public Room
         int isCharacterInRoom(QString inQString);
         vector<Character> getCharacterList();
         int numberOfCharacters();
+
 };
 
 #endif // MAINLOBBY_H
