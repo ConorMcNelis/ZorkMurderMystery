@@ -3,8 +3,29 @@
 Room::Room(){
 }
 
-Room::Room(QString description) {
-	this->description = description;
+Room::Room(QString inDescription)
+    :description(inDescription)
+{
+
+}
+
+Room::Room(QString inDescription, Item *newItem)
+    : description(inDescription)
+{
+    itemsInRoom.push_back(*newItem);
+}
+
+Room::Room(QString inDescription, Item *newItem, Item *newItem2)
+    :description(inDescription)
+{
+    itemsInRoom.push_back(*newItem);
+    itemsInRoom.push_back(*newItem2);
+}
+
+Room::Room(Item *newItem, Item *newItem2)
+{
+    itemsInRoom.push_back(*newItem);
+    itemsInRoom.push_back(*newItem2);
 }
 
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {

@@ -11,7 +11,7 @@ private:
     QString description;
     QString longDescription;
     QString Examination;
-	int weightGrams;
+    int weightGrams : 15;
 	float value;
 	bool weaponCheck;
 
@@ -24,7 +24,7 @@ public:
     void setExamination(QString examinationString);
     QString getExamination();
 	int getWeight();
-	void setWeight(int weightGrams);
+    void setWeight(int weightKG);
 	float getValue();
 	void setValue(float value);
 	int getWeaponCheck();

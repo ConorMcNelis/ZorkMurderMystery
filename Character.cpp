@@ -1,7 +1,8 @@
 #include "Character.h"
 
-Character::Character(QString description) {
-	this->description = description;
+Character::Character(QString inDescription)
+    : description(inDescription)
+{
 }
 
 QString Character::shortDescription(){

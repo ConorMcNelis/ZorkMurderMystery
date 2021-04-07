@@ -15,7 +15,7 @@ class MainLobby : public Room
         friend class mainwindow;
 
     public:
-        MainLobby(QString description);
+        MainLobby(QString description, Item *newItem, Item *newItem2);
         QString shortDescription();
         void addCharacter(Character *character);
         Character getCharacter(QString name);
