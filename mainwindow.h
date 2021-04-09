@@ -9,15 +9,14 @@
 #include <QDebug>
 #include <QFile>
 #include <QTextStream>
-#include "Command.h"
 #include "Room.h"
 #include "MainLobby.h"
 #include "item.h"
 #include "Character.h"
 #include "main.h"
-//#include "MainCharacter.h"
 #include <iostream>
 #include <QString>
+#define InventorySize (5)
 using namespace std;
 
 QT_BEGIN_NAMESPACE
@@ -68,11 +67,18 @@ private slots:
 
     void on_BackButton_clicked();
 
+    void on_InventoryList_activated(const QString &arg1);
+
 protected:
-    void goRoom(Command command);
+
     vector<Item> Items;
+    vector<Item> AllItems;
     vector<Character> Characters;
     vector<Character>::iterator it;
+    QString Inventory[InventorySize];
+    QString *ptr = Inventory;
+
+    int counter : 3;
     void createRooms();
     void printWelcome();
     void printHelp();

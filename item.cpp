@@ -1,22 +1,23 @@
 #include "item.h"
 
-Item::Item (QString inDescription, int inWeightGrams, float inValue/**, int weaponCheck*/) {
-	description = inDescription;
-	setWeight(inWeightGrams);
-	value = inValue;
-	/**weaponCheck(isWeapon);*/
+Item::Item (QString inDescription, int inWeightGrams, float inValue/**, int weaponCheck*/)
+    : description(inDescription), weightGrams(inWeightGrams), value(inValue)
+{
+
 }
 
-Item::Item(QString inDescription) {
-	description = inDescription;
+Item::Item(QString inDescription)
+    : description(inDescription)
+{
+
 }
 
 void Item::setWeight(int inWeightGrams)
 {
-    if (inWeightGrams > 9999 || inWeightGrams < 0)
-       cout << "weight invalid, must be 0<weight<9999" ;
+    if (inWeightGrams > 3000 || inWeightGrams < 0)
+       cout << "weight invalid, must be 0<weight<10" ;
     else
-	   weightGrams = inWeightGrams;
+       weightGrams = inWeightGrams;
 }
 
 void Item::setValue(float inValue)
@@ -26,14 +27,6 @@ void Item::setValue(float inValue)
     else
 	   value = inValue;
 }
-
-/**void Item::setWeaponCheck(int isWeapon)
-{
-    if(isWeapon > 0 || isWeapon < 0)
-        cout << "Item not a weapon" ;
-    else
-        cout << "Item is a weapon" ;
-}*/
 
 QString Item::getShortDescription()
 {

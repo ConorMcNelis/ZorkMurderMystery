@@ -19,7 +19,10 @@ private:
 
 public:
     int numberOfItems();
-    Room(QString description);
+    Room(QString inDescription);
+    Room(QString inDescription, Item *newItem);
+    Room(QString inDescription, Item *newItem, Item *newItem2);
+    Room(Item *newItem, Item *newItem2);
     Room();
 	void setExits(Room *north, Room *east, Room *south, Room *west);
     QString shortDescription();

@@ -1,8 +1,10 @@
 #include "MainLobby.h"
 
-MainLobby::MainLobby(QString description)
+MainLobby::MainLobby(QString inDescription, Item *newItem, Item *newItem2)
+    : Room {newItem, newItem2},
+        description(inDescription)
 {
-    this->description = description;
+
 }
 
 QString MainLobby::shortDescription(){
