@@ -14,6 +14,9 @@
 #include "item.h"
 #include "Character.h"
 #include "main.h"
+#include "animateobject.h"
+#include "map.h"
+#include "accusationcheck.h"
 #include <iostream>
 #include <QString>
 #define InventorySize (5)
@@ -36,8 +39,20 @@ public:
     Character *currentCharacter;
    // MainCharacter *player;
 
+
+    template <class T>
+    void bubbleSort(T a[], int n) {
+        for (int i = 0; i < n - 1; i++)
+            for (int j = n - 1; i < j; j--)
+                if (a[j] < a[j - 1] && a[j] != "" && a[j-1] != "")
+                  swap(a[j], a[j - 1]);
+    }
+
+
 private:
     Ui::MainWindow *ui;
+    Map *map;
+    AccusationCheck *check;
 
 private slots:
 
@@ -57,6 +72,8 @@ private slots:
 
     void on_GoSouthButton_clicked();
 
+    void on_TalkButton_clicked();
+
     void on_ExamineButton_clicked();
 
     void on_Option1_clicked();
@@ -68,6 +85,10 @@ private slots:
     void on_BackButton_clicked();
 
     void on_InventoryList_activated(const QString &arg1);
+
+    void on_OpenMapButton_clicked();
+
+    void on_AccuseButton_clicked();
 
 protected:
 

@@ -28,6 +28,14 @@ Room::Room(Item *newItem, Item *newItem2)
     itemsInRoom.push_back(*newItem2);
 }
 
+bool Room::operator == (const Room& other) const{
+    return description == other.description;
+}
+
+bool Room::operator != (const Room& other) const{
+    return description != other.description;
+}
+
 void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
 	if (north != NULL)
 		exits["north"] = north;
@@ -43,10 +51,23 @@ QString Room::shortDescription() {
 	return description;
 }
 
+QString Room:: Add(QString shortDescription, vector <Item> items){
+    for (int i = 0; i < (int)items.size(); i++)
+        shortDescription = shortDescription + items[i].longDescription();
+    return shortDescription;
+}
+
+QString Room:: operator +(vector <Item> items){
+    return Add(description, items);
+}
+
+void Room:: setLongDescription(QString RoomDescription){
+    LongDescription = RoomDescription;
+}
+
 QString Room::longDescription() {
     QString plusItemsDescription = shortDescription();
-    for (int i = 0; i < (int)itemsInRoom.size(); i++)
-        plusItemsDescription = plusItemsDescription + itemsInRoom[i].getLongDescription();
+    plusItemsDescription = Add(plusItemsDescription, itemsInRoom);
     return "room = " + plusItemsDescription + "\n" + displayItem() + exitString();
 }
 
@@ -67,9 +88,9 @@ Room* Room::nextRoom(string direction) {
                 // part of the "pair" (<string, Room*>) and return it.
 }
 
-void Room::addItem(Item *inItem) {
+void Room::addValue(Item *inItem) {
     //cout <<endl;
-    //cout << "Just added" + inItem->getLongDescription();
+    //cout << "Just added" + inItem->longDescription();
     itemsInRoom.push_back(*inItem);
 }
 
@@ -82,7 +103,7 @@ QString Room::displayItem() {
     else if (itemsInRoom.size() > 0) {
        int x = (0);
         for (int n = sizeItems; n > 0; n--) {
-            tempQString = tempQString + itemsInRoom[x].getShortDescription() + "  " ;
+            tempQString = tempQString + itemsInRoom[x].shortDescription() + "  " ;
             x++;
             }
         }
@@ -107,7 +128,7 @@ int Room::isItemInRoom(QString inQString)
        int x = (0);
         for (int n = sizeItems; n > 0; n--) {
             // compare inQString with short description
-            int tempFlag = inQString.compare( itemsInRoom[x].getShortDescription());
+            int tempFlag = inQString.compare( itemsInRoom[x].shortDescription());
             if (tempFlag == 0) {
                 itemsInRoom.erase(itemsInRoom.begin()+x);
                 return x;

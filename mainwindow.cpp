@@ -68,35 +68,41 @@ void MainWindow::on_GoSouthButton_clicked(){
     go("south");
 }
 
+void MainWindow::on_TalkButton_clicked(){
+    Characters = a->getCharacterList();
+    it = Characters.begin();
+    for(int i = 0; i < a->numberOfCharacters(); i++)
+    {
+        if (ui->CharacterList->currentText() == Characters[i].shortDescription()){
+            it += i;
+            currentCharacter = &(*it);
+            MainLobbyMethod(currentCharacter);
+        }
+    }
+}
+
 void MainWindow::on_ExamineButton_clicked(){
     bool exists = false;
     bool Icheck = false;
     Items = currentRoom->getItemList();
-    Characters = a->getCharacterList();
-    it = Characters.begin();
+    QString currentItem;
     for(int i = 0; i < currentRoom->numberOfItems(); i++)
     {
-        if (ui->ItemList->currentText() == Items[i].getShortDescription())
+        if (ui->ItemList->currentText() == Items[i].shortDescription())
         {
-            ui->Descriptions->setText(Items[i].getLongDescription());
+            ui->Descriptions->setText(Items[i].longDescription());
             Icheck = true;
-        }
-        else if(i < (int)Characters.size())
-            if (ui->ItemList->currentText() == Characters[i].shortDescription()){
-                it += i;
-                currentCharacter = &(*it);
-                MainLobbyMethod(currentCharacter);
-            }
-
-        for(int x = 0; x < 4; x++)
-        {
-            if(Items[i].getShortDescription() == Inventory[i])
-            {
-               exists = true;
-            }
+            currentItem = Items[i].shortDescription();
         }
     }
 
+    for(int x = 0; x < InventorySize; x++)
+    {
+        if(currentItem == Inventory[x])
+        {
+           exists = true;
+        }
+    }
     if(exists == false && Icheck == true)
     {
 
@@ -108,10 +114,16 @@ void MainWindow::on_ExamineButton_clicked(){
         {
             Inventory[counter] = ui->ItemList->currentText();
             counter++;
-            ui->InventoryList->addItem(ui->ItemList->currentText());
             cout <<counter;
 
         }
+    }
+    bubbleSort(Inventory, InventorySize);
+    int i = 0;
+    ui->InventoryList->clear();
+    while(Inventory[i] != ""){
+        ui->InventoryList->addItem(Inventory[i]);
+        i++;
     }
 }
 
@@ -139,9 +151,9 @@ void MainWindow::on_InventoryList_activated(const QString &arg1)
         {
             for(int x = 0; x < (int)AllItems.size(); x++)
             {
-                if(*(ptr+i) == AllItems[x].getShortDescription())
+                if(*(ptr+i) == AllItems[x].shortDescription())
                    {
-                        ui->Descriptions->setText(AllItems[x].getLongDescription());
+                        ui->Descriptions->setText(AllItems[x].longDescription());
                    }
              }
          }
@@ -151,19 +163,34 @@ void MainWindow::on_InventoryList_activated(const QString &arg1)
 }
 
 
+void MainWindow::on_OpenMapButton_clicked()
+{
+    map = new Map(this);
+    map->show();
+}
+
+void MainWindow::on_AccuseButton_clicked()
+{
+    check = new AccusationCheck(this);
+    check->selected = currentCharacter;
+    check->show();
+}
+
+
 void MainWindow::createRooms()  {
     //MainCharacter *player;
     Room *b, *c, *d, *e, *f, *g, *h, *i, *j;
     Item *soup, *rustedSword, *rock, *stick;
     Character *Gardener, *Butler;
+    AnimateObject *Hamster;
 
     //Create Items
     soup = new Item("soup", 10, 2);
         soup->setLongDescription("On the oaken table you see a bowl of soup, steaming and filling the room with a pungent odour.");
-        soup->setExamination(readFile(":/Examinations/Text/Examinations/SoupExamination.txt"));
+        soup->setExamination(readFile(":/Text/Examinations/SoupExamination.txt"));
         soup->setWeight(500);
     rustedSword = new Item("sword", 10, 2);
-        rustedSword->setLongDescription(readFile(":/CharacterLongDescriptions/Text/Sword.txt"));
+        rustedSword->setLongDescription(readFile(":/Text/Sword.txt"));
         rustedSword->setWeight(1500);
     stick = new Item("stick", 1, 11);
         stick->setLongDescription("A broken treebranch lays snapped in the grass, it could be used as a crude weapon. ");
@@ -179,22 +206,31 @@ void MainWindow::createRooms()  {
 
     //create Characters
     Gardener = new Character("The Gardener");
-        Gardener->setDialogueLocation(":/Examinations/Dialogue/Text/Examinations/Character Dialogue/Gardener Dialogue.txt");
+        Gardener->setDialogueLocation(":/Text/Examinations/Character Dialogue/Gardener Dialogue.txt");
+        Gardener->setCharacterPic(":/Pictures/GardenerPic.jpg");
     Butler = new Character("The Butler");
-        Butler->setDialogueLocation(":/Examinations/Dialogue/Text/Examinations/Character Dialogue/Butler Dialogue.txt");
+        Butler->setDialogueLocation(":/Text/Examinations/Character Dialogue/Butler Dialogue.txt");
+        Butler->setCharacterPic(":/Pictures/Butler.jpg");
 
-    a = new MainLobby("The Main Lobby:", stick, rock);
+    Hamster = new AnimateObject("Hamster");
+         Hamster->setDialogueLocation(":/Text/Examinations/Character Dialogue/Hamster Dialogue.txt");
+         Hamster->setCharacterPic(":/Pictures/HamsterPic.jpg");
+
+    a = new MainLobby("The Main Lobby: ");
         a->addCharacter(Gardener);
         a->addCharacter(Butler);
-    b = new Room("b");
-    c = new Room("c");
-    d = new Room("d", new Item("xx", 3, 33));
-    e = new Room("e");
-    f = new Room("f", new Item("yy", 4, 44));
-    g = new Room("g");
-    h = new Room("h");
-    i = new Room("i");
-    j = new Room("You enter a cozy cottage, a roaring fireplace crackles at the west side of the room, and an oaken table lies in the centre. ", soup, rustedSword);
+        a->addAnimateObject(Hamster);
+        a->addValue(stick);
+        a->addValue(rock);
+    b = new Room("Dining Room: ");
+    c = new Room("Billard Room: ");
+    d = new Room("Hall: ", new Item("Picture", 3, 33));
+    e = new Room("Lounge: ");
+    f = new Room("Ball Room: ", new Item("Microphone", 4, 44));
+    g = new Room("Kitchen: ");
+    h = new Room("Conservatory: ");
+    i = new Room("Study: ");
+    j = new Room("Driveway: ", soup, rustedSword);
 
 //             (N, E, S, W)
     a->setExits(f, b, d, c);
@@ -232,20 +268,22 @@ void MainWindow::go(string direction) {
         //ui->Descriptions->setText("Current Room: "+currentRoom->shortDescription()+"\nNext Room: "+nextRoom->shortDescription());
        currentRoom = nextRoom;
        ui->Descriptions->setText(currentRoom->longDescription()+"\n");
-       if (currentRoom->shortDescription() != "" ){
            //ui->Descriptions->setText("This isn't the main lobby");
-           vector<Item> Items = currentRoom->getItemList();
+       vector<Item> Items = currentRoom->getItemList();
+       ui->ItemList->clear();
+       ui->CharacterList->clear();
+       for(int i = 0; i < currentRoom->numberOfItems(); i++)
+           ui->ItemList->addItem(Items[i].shortDescription());
+       if (currentRoom == a){
            ui->ItemList->clear();
-           for(int i = 0; i < currentRoom->numberOfItems(); i++)
-               ui->ItemList->addItem(Items[i].getShortDescription());
-       }
-       else{
-           MainLobby *CurrentRoom = a;
-           vector<Character> Characters = CurrentRoom->getCharacterList();
-           ui->Descriptions->setText(CurrentRoom->longDescription()+"\n");
-           ui->ItemList->clear();
-           for(int i = 0; i < CurrentRoom->numberOfCharacters(); i++)
-               ui->ItemList->addItem(Characters[i].shortDescription());
+           vector<Character> Characters = a->getCharacterList();
+           vector<Item> ItemsA = a->getItemList();
+           ui->Descriptions->setText(a->longDescription()+"\n");
+           for(int i = 0; i < a->numberOfCharacters(); i++){
+               ui->CharacterList->addItem(Characters[i].shortDescription());
+               if(i < a->numberOfItems())
+                   ui->ItemList->addItem(ItemsA[i].shortDescription());
+           }
        }
     }
 }
@@ -253,6 +291,10 @@ void MainWindow::go(string direction) {
 void MainWindow::MainLobbyMethod(Character *suspect){
     ui->GameWidget->setCurrentIndex(3);
     ui->DialogueBox->setText(suspect->getDialogue(0));
+    QPixmap pix(suspect->getCharacterPic());
+    int w = ui->label->width();
+    int h = ui->label->height();
+    ui->ProfilePic->setPixmap(pix.scaled(w/2, h/2, Qt::KeepAspectRatio));
 }
 
 QString MainWindow::readFile(QString fileLocation){
@@ -276,7 +318,3 @@ QString MainWindow::readFile(QString fileLocation){
     }
     return ret;
 }
-
-
-
-

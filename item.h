@@ -1,34 +1,34 @@
 #ifndef ITEM_H_
 #define ITEM_H_
-
+#include "interface.h"
 #include <map>
 #include <QString>
 #include <iostream>
 using namespace std;
 
-class Item {
+class Item : Interface {
 private:
     QString description;
-    QString longDescription;
+    QString LongDescription;
     QString Examination;
     int weightGrams : 15;
 	float value;
-	bool weaponCheck;
+
 
 public:
     Item (QString description, int inWeight, float inValue);
     Item (QString description);
-    QString getShortDescription();
-    void setLongDescription(QString RoomDescription);
-    QString getLongDescription();
+    //Item (const Item& other);
+    virtual QString shortDescription();
+    virtual void setLongDescription(QString RoomDescription);
+    virtual QString longDescription();
     void setExamination(QString examinationString);
     QString getExamination();
 	int getWeight();
     void setWeight(int weightKG);
 	float getValue();
 	void setValue(float value);
-	int getWeaponCheck();
-	void setWeaponCheck(int weaponCheck);
+
 
     friend class Character;
 };

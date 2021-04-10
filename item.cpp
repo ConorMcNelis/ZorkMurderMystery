@@ -12,6 +12,14 @@ Item::Item(QString inDescription)
 
 }
 
+/*
+Item::Item(const Item& other)
+    : description(other.description)
+{
+
+}
+*/
+
 void Item::setWeight(int inWeightGrams)
 {
     if (inWeightGrams > 3000 || inWeightGrams < 0)
@@ -28,19 +36,19 @@ void Item::setValue(float inValue)
 	   value = inValue;
 }
 
-QString Item::getShortDescription()
+QString Item::shortDescription()
 {
 	return description;
 }
 
 void Item::setLongDescription(QString RoomDescription)
 {
-    longDescription = RoomDescription;
+    LongDescription = RoomDescription;
 }
 
-QString Item::getLongDescription()
+QString Item::longDescription()
 {
-    return longDescription;
+    return LongDescription;
 }
 
 void Item::setExamination(QString examinationString)
