@@ -18,21 +18,21 @@ private:
 
 
 public:
-    int numberOfItems();
+    virtual int numberOfItems();
     Room(QString inDescription);
     Room(QString inDescription, Item *newItem);
     Room(QString inDescription, Item *newItem, Item *newItem2);
     Room(Item *newItem, Item *newItem2);
     Room();
-	void setExits(Room *north, Room *east, Room *south, Room *west);
+    void setExits(Room *north, Room *east, Room *south, Room *west);
     QString shortDescription();
     QString longDescription();
     Room* nextRoom(string direction);
     void addItem(Item *inItem);
-    QString displayItem();
+    virtual QString displayItem();
     int isItemInRoom(QString inQString);
     vector<Item> getItemList();
-    void removeItemFromRoom(int location);
+    void removeItemFromRoom(Item *inItem);
 };
 
 #endif

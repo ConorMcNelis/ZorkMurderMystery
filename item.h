@@ -16,6 +16,7 @@ private:
 	bool weaponCheck;
 
 public:
+    Item();
     Item (QString description, int inWeight, float inValue);
     Item (QString description);
     QString getShortDescription();

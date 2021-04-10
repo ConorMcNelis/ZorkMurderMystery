@@ -12,6 +12,10 @@ Item::Item(QString inDescription)
 
 }
 
+Item::Item(){
+
+};
+
 void Item::setWeight(int inWeightGrams)
 {
     if (inWeightGrams > 3000 || inWeightGrams < 0)

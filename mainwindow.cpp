@@ -9,16 +9,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->GameWidget->setCurrentIndex(0);
-    counter = 0;
+    counter = 1;
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-    vector<Item>().swap(AllItems);
     vector<Item>().swap(Items);
     vector<Character>().swap(Characters);
-    *ptr = nullptr;
 }
 
 class oobException : public exception{
@@ -80,40 +78,50 @@ void MainWindow::on_ExamineButton_clicked(){
         {
             ui->Descriptions->setText(Items[i].getLongDescription());
             Icheck = true;
+            ptr = &Items[i];
         }
-        else if(i < (int)Characters.size())
-            if (ui->ItemList->currentText() == Characters[i].shortDescription()){
-                it += i;
+    }
+    if(Icheck == true){
+        if(counter == 4)
+            ui->Descriptions->setText("Your Inventory is full!");
+        else{
+            for(int x = 0; x < InventorySize; x++)
+            {
+                if(ui->ItemList->currentText() == Inventory[x].getShortDescription())
+                {
+                    exists = true;
+               }
+            }
+            if(exists == false)
+            {
+                Inventory[counter] = *ptr;
+                counter++;
+                ui->InventoryList->addItem(ui->ItemList->currentText());
+                currentRoom->removeItemFromRoom(ptr);
+            }
+
+        }
+
+     }
+    if(MainLobby* temp = dynamic_cast<MainLobby*>(currentRoom))
+    {
+        temp = (MainLobby*)currentRoom;
+        Characters = temp->getCharacterList();
+        it = Characters.begin();
+        for(int x = 0; x < (int)Characters.size(); x++)
+        {
+
+            if (ui->ItemList->currentText() == Characters[x].shortDescription()){
+                it += x;
                 currentCharacter = &(*it);
                 MainLobbyMethod(currentCharacter);
             }
-
-        for(int x = 0; x < 4; x++)
-        {
-            if(Items[i].getShortDescription() == Inventory[i])
-            {
-               exists = true;
-            }
-        }
-    }
-
-    if(exists == false && Icheck == true)
-    {
-
-        if(counter == 4)
-        {
-            ui->Descriptions->setText("Your Inventory is full!");
-        }
-        else
-        {
-            Inventory[counter] = ui->ItemList->currentText();
-            counter++;
-            ui->InventoryList->addItem(ui->ItemList->currentText());
-            cout <<counter;
-
         }
     }
 }
+
+
+
 
 void MainWindow::on_Option1_clicked(){
     ui->DialogueBox->setText(currentCharacter->getDialogue(1));
@@ -133,26 +141,20 @@ void MainWindow::on_BackButton_clicked(){
 
 void MainWindow::on_InventoryList_activated(const QString &arg1)
 {
-   for(int i = 0; i < counter; i++)
-   {
-        if(arg1 == *(ptr+i))
-        {
-            for(int x = 0; x < (int)AllItems.size(); x++)
-            {
-                if(*(ptr+i) == AllItems[x].getShortDescription())
-                   {
-                        ui->Descriptions->setText(AllItems[x].getLongDescription());
-                   }
-             }
+    for(int i = 0; i < InventorySize; i++)
+    {
+         if(arg1 == Inventory[i].getShortDescription())
+         {
+            ui->Descriptions->setText(Inventory[i].getLongDescription());
          }
-   }
+
+    }
 
 
 }
 
 
 void MainWindow::createRooms()  {
-    //MainCharacter *player;
     Room *b, *c, *d, *e, *f, *g, *h, *i, *j;
     Item *soup, *rustedSword, *rock, *stick;
     Character *Gardener, *Butler;
@@ -171,11 +173,7 @@ void MainWindow::createRooms()  {
     rock = new Item("rock", 2, 22);
         rock->setLongDescription("A heavy rock is wedged in the dirt, it could fit in the palm of your hand. ");
         rock->setWeight(1000);
-    //Add all created Items to AllItem vector
-        AllItems.push_back(*soup);
-        AllItems.push_back(*rustedSword);
-        AllItems.push_back(*rock);
-        AllItems.push_back(*stick);
+
 
     //create Characters
     Gardener = new Character("The Gardener");
@@ -277,6 +275,58 @@ QString MainWindow::readFile(QString fileLocation){
     return ret;
 }
 
+void MainWindow::createInventory(){
+    #ifdef InventorySize
+    Item Inventory[InventorySize];
+    Item inven, temp1, temp2, temp3, temp4, temp5;
+     inven = Item("Inventory", 10, 10);
+        inven.setLongDescription("This is your Inventory, click on an Item to examine it!");
+    temp1 =  Item("You shouldnt be looking at this",10, 10);
+        temp1.setLongDescription("You shouldnt be able to see this");
+    temp2 = Item("You shouldnt be looking at this",10, 10);
+        temp2.setLongDescription("You shouldnt be able to see this");
+    temp3 =  Item("You shouldnt be looking at this",10, 10);
+         temp3.setLongDescription("You shouldnt be able to see this");
+    temp4 =  Item("You shouldnt be looking at this",10, 10);
+         temp4.setLongDescription("You shouldnt be able to see this");
+    temp5 =  Item("You shouldnt be looking at this",10, 10);
+        temp5.setLongDescription("You shouldnt be able to see this");
+    Inventory[0] = inven;
+    Inventory[1] = temp1;
+    Inventory[2] = temp2;
+    Inventory[3] = temp3;
+    Inventory[4] = temp4;
+    Inventory[5] = temp5;
+
+    #endif
+}
 
 
+namespace Victim{
+    QString setText(QString input)
+    {
+        input = "The Victim was the young master of the house. Body has multiple stab wounds but no signs of a struggle.";
+        return input;
+    }
+}
+
+namespace MC{
+    QString setText(QString input)
+    {
+        input = "You are Gruff McSaderton. The best detective in <INSERT CITY HERE>";
+        return input;
+    }
+}
+void MainWindow::on_VicButton_clicked()
+{
+    QString input;
+    ui->Descriptions->setText(Victim::setText(input));
+}
+
+
+void MainWindow::on_MCButton_clicked()
+{
+    QString input;
+    ui->Descriptions->setText(MC::setText(input));
+}
 

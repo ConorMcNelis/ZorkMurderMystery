@@ -33,14 +33,14 @@ void Room::setExits(Room *north, Room *east, Room *south, Room *west) {
 		exits["north"] = north;
 	if (east != NULL)
 		exits["east"] = east;
-	if (south != NULL)
+    if (south != NULL)
 		exits["south"] = south;
 	if (west != NULL)
 		exits["west"] = west;
 }
 
 QString Room::shortDescription() {
-	return description;
+    return description;
 }
 
 QString Room::longDescription() {
@@ -71,6 +71,16 @@ void Room::addItem(Item *inItem) {
     //cout <<endl;
     //cout << "Just added" + inItem->getLongDescription();
     itemsInRoom.push_back(*inItem);
+}
+
+void Room::removeItemFromRoom(Item  *inItem){
+    for(int i = 0; i < (int)itemsInRoom.size(); i++){
+        if(inItem->getShortDescription() == itemsInRoom[i].getShortDescription())
+            itemsInRoom.erase(itemsInRoom.begin()+i);
+
+
+    }
+
 }
 
 QString Room::displayItem() {
