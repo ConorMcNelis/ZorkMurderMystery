@@ -30,7 +30,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="OpenMenu">
      <property name="styleSheet">
@@ -287,7 +287,7 @@ background-color: rgb(0, 0, 0);</string>
        <rect>
         <x>520</x>
         <y>530</y>
-        <width>80</width>
+        <width>61</width>
         <height>22</height>
        </rect>
       </property>
@@ -318,6 +318,71 @@ background-color: rgb(0, 0, 0);</string>
        </property>
       </item>
      </widget>
+     <widget class="QComboBox" name="CharacterList">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>600</y>
+        <width>65</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="TalkButton">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>580</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>Talk</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>479</x>
+        <y>551</y>
+        <width>41</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>Take</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="OpenMapButton">
+      <property name="geometry">
+       <rect>
+        <x>680</x>
+        <y>500</y>
+        <width>80</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
+      </property>
+      <property name="text">
+       <string>Open Map</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="MainLobby">
      <widget class="QLabel" name="DialogueBox">
@@ -340,17 +405,17 @@ background-color: rgb(0, 0, 0);</string>
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label_5">
+     <widget class="QLabel" name="ProfilePic">
       <property name="geometry">
        <rect>
-        <x>600</x>
-        <y>220</y>
-        <width>151</width>
+        <x>590</x>
+        <y>230</y>
+        <width>161</width>
         <height>261</height>
        </rect>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="label_6">
@@ -426,6 +491,19 @@ background-color: rgb(0, 0, 0);</string>
       </property>
       <property name="text">
        <string>Back</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="AccuseButton">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>510</y>
+        <width>80</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Accuse</string>
       </property>
      </widget>
     </widget>
