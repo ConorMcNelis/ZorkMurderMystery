@@ -9,29 +9,32 @@ using namespace std;
 class Item : Interface {
 private:
     QString description;
-    QString LongDescription;
+    QString LongItemDescription;
     QString Examination;
     int weightGrams : 15;
-	float value;
-
+    float value;
+    friend class Room;
 
 public:
     Item (QString description, int inWeight, float inValue);
     Item (QString description);
     Item();
-    //Item (const Item& other);
-    virtual QString shortDescription();
-    virtual void setLongDescription(QString RoomDescription);
-    virtual QString longDescription();
+    Item (const Item& other);
+    QString shortDescription();
+    void setLongDescription(QString ItemDescription);
+    QString longDescription();
+    bool operator < (const Item& other) const;
+    bool operator > (const Item& other) const;
+    bool operator == (const QString& other) const;
+    bool operator != (const QString& other) const;
     void setExamination(QString examinationString);
     QString getExamination();
-	int getWeight();
+    int getWeight();
     void setWeight(int weightKG);
-	float getValue();
-	void setValue(float value);
+    float getValue();
+    void setValue(float value);
 
 
-    friend class Character;
 };
 
 #endif /*ITEM_H_*/

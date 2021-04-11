@@ -18,9 +18,9 @@ public:
     //void addItem(Item *item);
     friend class MainLobby;
     Character(QString description);
-    virtual QString shortDescription();
-    virtual void setLongDescription(QString RoomDescription);
-    virtual QString longDescription();
+    QString shortDescription();
+    void setLongDescription(QString CharacterDescription);
+    QString longDescription();
     QString getDialogue(int choice);
     QString getDialogueLocation();
     void setDialogueLocation(QString location);

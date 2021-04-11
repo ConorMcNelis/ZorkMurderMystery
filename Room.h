@@ -17,7 +17,7 @@ class Room : public Interface
         friend class MainLobby;
 
     public:
-        int numberOfItems();
+        virtual int numberOfItems();
         Room(QString inDescription);
         Room(QString inDescription, Item *newItem);
         Room(QString inDescription, Item *newItem, Item *newItem2);
@@ -27,17 +27,17 @@ class Room : public Interface
         bool operator == (const Room& other) const;
         bool operator != (const Room& other) const;
         void setExits(Room *north, Room *east, Room *south, Room *west);
-        virtual QString shortDescription();
+        QString shortDescription();
         QString Add(QString shortDescription, vector <Item> items);
         QString operator+(vector <Item> items);
-        virtual void setLongDescription(QString RoomDescription);
-        virtual QString longDescription();
+        void setLongDescription(QString RoomDescription);
+        QString longDescription();
         Room* nextRoom(string direction);
-        virtual void addValue(Item *inItem);
+        void addValue(Item *inItem);
         QString displayItem();
         int isItemInRoom(QString inQString);
         vector<Item> getItemList();
-        void removeItemFromRoom(Item* target);
+        void removeItemFromRoom(Item *inItem);
 };
 
 #endif

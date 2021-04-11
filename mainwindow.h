@@ -1,6 +1,5 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 #include <QMainWindow>
 #include <QPushButton>
 #include <QStackedWidget>
@@ -17,12 +16,10 @@
 #include "animateobject.h"
 #include "map.h"
 #include "accusationcheck.h"
+#include "Array.h"
 #include <iostream>
 #include <QString>
-#include <QSound>
-#define InventorySize (5)
-#define DoorNoise QSound::play("://door_creak_closing.wav")
-
+#define InventorySize (6)
 using namespace std;
 
 QT_BEGIN_NAMESPACE
@@ -59,6 +56,10 @@ private:
 
 private slots:
 
+    void on_VicButton_clicked();
+
+    void on_MCButton_clicked();
+
     void on_ExitButton_clicked();
 
     void on_HTPButton_clicked();
@@ -93,28 +94,19 @@ private slots:
 
     void on_AccuseButton_clicked();
 
-    void on_takeButton_clicked();
-
-    void on_VictimInfo_clicked();
-
-    void on_CharacterInfo_clicked();
-
 protected:
-
+    Array<int, 7> exampleArray;
+    Array<char, 8> exampleArray2;
     vector<Item> Items;
+    vector<Item> AllItems;
     vector<Character> Characters;
     vector<Character>::iterator it;
-    #ifdef InventorySize
+
+#ifdef InventorySize
     Item Inventory[InventorySize];
     Item *ptr = Inventory;
-    int counter :4;
-    #endif
-    union
-    {
-        QString output;
-        bool exists;
-        QString ret;
-    };
+    int counter : 4;
+#endif
 
     void createRooms();
     void printWelcome();
@@ -123,9 +115,9 @@ protected:
     void displayItems();
     void createCharacters();
     void displayCharacters();
-    void createInventory();
     void go(string direction);
     void MainLobbyMethod(Character *suspect);
+    void createInventory();
     QString readFile(QString fileLocation);
 };
 #endif // MAINWINDOW_H

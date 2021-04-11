@@ -30,7 +30,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="OpenMenu">
      <property name="styleSheet">
@@ -349,13 +349,13 @@ background-color: rgb(0, 0, 0);</string>
        <string>Talk</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="takeButton">
+     <widget class="QPushButton" name="pushButton">
       <property name="geometry">
        <rect>
-        <x>470</x>
-        <y>550</y>
-        <width>51</width>
-        <height>31</height>
+        <x>479</x>
+        <y>551</y>
+        <width>41</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -383,13 +383,13 @@ background-color: rgb(0, 0, 0);</string>
        <string>Open Map</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="VictimInfo">
+     <widget class="QPushButton" name="VicButton">
       <property name="geometry">
        <rect>
         <x>310</x>
-        <y>610</y>
+        <y>620</y>
         <width>80</width>
-        <height>21</height>
+        <height>22</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -400,21 +400,21 @@ background-color: rgb(0, 0, 0);</string>
        <string>Victim Info</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="CharacterInfo">
+     <widget class="QPushButton" name="MCButton">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>610</y>
+        <x>410</x>
+        <y>620</y>
         <width>80</width>
-        <height>21</height>
+        <height>22</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(0, 0, 0);
-color: rgb(255, 255, 255);</string>
+       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(0, 0, 0);</string>
       </property>
       <property name="text">
-       <string>Character Info</string>
+       <string>Detective info</string>
       </property>
      </widget>
     </widget>

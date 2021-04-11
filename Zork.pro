@@ -1,5 +1,4 @@
 QT       += core gui
-QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -23,13 +22,13 @@ SOURCES += \
     map.cpp
 
 HEADERS += \
+    Array.h \
     Character.h \
     MainCharacter.h \
     MainLobby.h \
     Room.h \
     accusationcheck.h \
     animateobject.h \
-    array.h \
     interface.h \
     item.h \
     main.h \
