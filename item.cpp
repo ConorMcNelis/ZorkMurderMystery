@@ -11,10 +11,19 @@ Item::Item(QString inDescription)
 {
 
 }
+Item::Item()
+{
 
-Item::Item(){
+}
 
-};
+
+/*
+Item::Item(const Item& other)
+    : description(other.description)
+{
+
+}
+*/
 
 void Item::setWeight(int inWeightGrams)
 {
@@ -32,19 +41,19 @@ void Item::setValue(float inValue)
 	   value = inValue;
 }
 
-QString Item::getShortDescription()
+QString Item::shortDescription()
 {
 	return description;
 }
 
 void Item::setLongDescription(QString RoomDescription)
 {
-    longDescription = RoomDescription;
+    LongDescription = RoomDescription;
 }
 
-QString Item::getLongDescription()
+QString Item::longDescription()
 {
-    return longDescription;
+    return LongDescription;
 }
 
 void Item::setExamination(QString examinationString)

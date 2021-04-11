@@ -9,29 +9,15 @@ QString Character::shortDescription(){
     return description;
 }
 
-QString Character::longDescription()
+void Character::setLongDescription(QString RoomDescription)
 {
-  QString ret = this->description;
-  ret += ":\n";
-  QFile file(":/CharacterLongDescriptions/Text/TestText.txt");
-  if (!file.exists())
-      qDebug() << file.fileName() << "does not exist";
-   else if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
-      cerr << "read in";
-  QTextStream in(&file);
-  in.seek(0);
-  while (!in.atEnd()){
-      QString line = in.readLine();
-      ret = ret + line + "\n";
-  }
-  file.close();
-  }
-  else
-  {
-      qDebug() << "Couldn't open file";
-  }
-  return ret;
+    LongDescription = RoomDescription;
 }
+
+QString Character::longDescription(){
+    return LongDescription;
+}
+
 
 void Character::setDialogueLocation(QString location){
     dialogueLocation = location;
@@ -54,6 +40,14 @@ QString Character::getDialogue(int choice){
             line++;
         }
     return dialogue;
+}
+
+void Character::setCharacterPic(QString location){
+    picLocation = location;
+}
+
+QString Character::getCharacterPic(){
+    return picLocation;
 }
 
 

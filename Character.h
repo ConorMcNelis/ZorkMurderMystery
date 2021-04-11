@@ -18,15 +18,20 @@ public:
     //void addItem(Item *item);
     friend class MainLobby;
     Character(QString description);
-    QString shortDescription();
-    QString longDescription();
+    virtual QString shortDescription();
+    virtual void setLongDescription(QString RoomDescription);
+    virtual QString longDescription();
     QString getDialogue(int choice);
     QString getDialogueLocation();
     void setDialogueLocation(QString location);
+    void setCharacterPic(QString location);
+    QString getCharacterPic();
 private:
     QString description;
+    QString LongDescription;
     QString dialogue;
     QString dialogueLocation;
+    QString picLocation;
 };
 
 

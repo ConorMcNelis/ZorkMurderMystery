@@ -9,14 +9,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->GameWidget->setCurrentIndex(0);
-    counter = 1;
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+
     vector<Item>().swap(Items);
     vector<Character>().swap(Characters);
+
 }
 
 class oobException : public exception{
@@ -26,6 +27,22 @@ class oobException : public exception{
         return "Error, trying to access invalid memory address\n";
     }
 };
+
+namespace Victim {
+    QString setText(QString input)
+    {
+        input = "The Victim was the young master of the house. Body has multiple stab wounds but no signs of a struggle.";
+        return input;
+    }
+}
+
+namespace MC{
+    QString setText(QString input)
+    {
+        input = "You are Gruff McSaderton. The best detective in <INSERT CITY HERE>";
+        return input;
+    }
+}
 
 
 void MainWindow::on_ExitButton_clicked()
@@ -66,61 +83,36 @@ void MainWindow::on_GoSouthButton_clicked(){
     go("south");
 }
 
-void MainWindow::on_ExamineButton_clicked(){
-    bool exists = false;
-    bool Icheck = false;
-    Items = currentRoom->getItemList();
+void MainWindow::on_TalkButton_clicked(){
     Characters = a->getCharacterList();
     it = Characters.begin();
-    for(int i = 0; i < currentRoom->numberOfItems(); i++)
+    for(int i = 0; i < a->numberOfCharacters(); i++)
     {
-        if (ui->ItemList->currentText() == Items[i].getShortDescription())
-        {
-            ui->Descriptions->setText(Items[i].getLongDescription());
-            Icheck = true;
-            ptr = &Items[i];
-        }
-    }
-    if(Icheck == true){
-        if(counter == 4)
-            ui->Descriptions->setText("Your Inventory is full!");
-        else{
-            for(int x = 0; x < InventorySize; x++)
-            {
-                if(ui->ItemList->currentText() == Inventory[x].getShortDescription())
-                {
-                    exists = true;
-               }
-            }
-            if(exists == false)
-            {
-                Inventory[counter] = *ptr;
-                counter++;
-                ui->InventoryList->addItem(ui->ItemList->currentText());
-                currentRoom->removeItemFromRoom(ptr);
-            }
-
-        }
-
-     }
-    if(MainLobby* temp = dynamic_cast<MainLobby*>(currentRoom))
-    {
-        temp = (MainLobby*)currentRoom;
-        Characters = temp->getCharacterList();
-        it = Characters.begin();
-        for(int x = 0; x < (int)Characters.size(); x++)
-        {
-
-            if (ui->ItemList->currentText() == Characters[x].shortDescription()){
-                it += x;
-                currentCharacter = &(*it);
-                MainLobbyMethod(currentCharacter);
-            }
+        if (ui->CharacterList->currentText() == Characters[i].shortDescription()){
+            it += i;
+            currentCharacter = &(*it);
+            MainLobbyMethod(currentCharacter);
         }
     }
 }
 
-
+void MainWindow::on_ExamineButton_clicked(){
+    Items = currentRoom->getItemList();
+    for(int i = 0; i < currentRoom->numberOfItems(); i++)
+    {
+        if (ui->ItemList->currentText() == Items[i].shortDescription())
+        {
+             ui->Descriptions->setText(Items[i].longDescription());
+        }
+    }
+    //bubbleSort(Inventory, InventorySize);
+    //int i = 0;
+    //ui->InventoryList->clear();
+    //while(Inventory[i] != ""){
+       //ui->InventoryList->addItem(Inventory[i]);
+        //i++;
+    //}
+}
 
 
 void MainWindow::on_Option1_clicked(){
@@ -141,31 +133,44 @@ void MainWindow::on_BackButton_clicked(){
 
 void MainWindow::on_InventoryList_activated(const QString &arg1)
 {
-    for(int i = 0; i < InventorySize; i++)
-    {
-         if(arg1 == Inventory[i].getShortDescription())
-         {
-            ui->Descriptions->setText(Inventory[i].getLongDescription());
-         }
+   for(int i = 0; i < counter; i++)
+   {
+      if(Inventory[i].shortDescription() == arg1)
+      {
+           ui->Descriptions->setText(Inventory[i].longDescription());
+      }
+   }
 
-    }
+}
 
+void MainWindow::on_OpenMapButton_clicked()
+{
+    map = new Map(this);
+    map->show();
+}
 
+void MainWindow::on_AccuseButton_clicked()
+{
+    check = new AccusationCheck(this);
+    check->selected = currentCharacter;
+    check->show();
 }
 
 
 void MainWindow::createRooms()  {
+    //MainCharacter *player;
     Room *b, *c, *d, *e, *f, *g, *h, *i, *j;
     Item *soup, *rustedSword, *rock, *stick;
     Character *Gardener, *Butler;
+    AnimateObject *Hamster;
 
     //Create Items
     soup = new Item("soup", 10, 2);
         soup->setLongDescription("On the oaken table you see a bowl of soup, steaming and filling the room with a pungent odour.");
-        soup->setExamination(readFile(":/Examinations/Text/Examinations/SoupExamination.txt"));
+        soup->setExamination(readFile("://Text/Examinations/SoupExamination.txt"));
         soup->setWeight(500);
     rustedSword = new Item("sword", 10, 2);
-        rustedSword->setLongDescription(readFile(":/CharacterLongDescriptions/Text/Sword.txt"));
+        rustedSword->setLongDescription(readFile("://Text/Sword.txt"));
         rustedSword->setWeight(1500);
     stick = new Item("stick", 1, 11);
         stick->setLongDescription("A broken treebranch lays snapped in the grass, it could be used as a crude weapon. ");
@@ -174,25 +179,33 @@ void MainWindow::createRooms()  {
         rock->setLongDescription("A heavy rock is wedged in the dirt, it could fit in the palm of your hand. ");
         rock->setWeight(1000);
 
-
     //create Characters
     Gardener = new Character("The Gardener");
-        Gardener->setDialogueLocation(":/Examinations/Dialogue/Text/Examinations/Character Dialogue/Gardener Dialogue.txt");
+        Gardener->setDialogueLocation("://Text/Examinations/Character Dialogue/Gardener Dialogue.txt");
+        Gardener->setCharacterPic("://GardenerPic.jpg");
     Butler = new Character("The Butler");
-        Butler->setDialogueLocation(":/Examinations/Dialogue/Text/Examinations/Character Dialogue/Butler Dialogue.txt");
+        Butler->setDialogueLocation("://Text/Examinations/Character Dialogue/Butler Dialogue.txt");
+        Butler->setCharacterPic("://Butler.jpg");
 
-    a = new MainLobby("The Main Lobby:", stick, rock);
+    Hamster = new AnimateObject("Hamster");
+         Hamster->setDialogueLocation("://Text/Examinations/Character Dialogue/Hamster Dialogue.txt");
+         Hamster->setCharacterPic("://HamsterPic.jpg");
+
+    a = new MainLobby("The Main Lobby: ");
         a->addCharacter(Gardener);
         a->addCharacter(Butler);
-    b = new Room("b");
-    c = new Room("c");
-    d = new Room("d", new Item("xx", 3, 33));
-    e = new Room("e");
-    f = new Room("f", new Item("yy", 4, 44));
-    g = new Room("g");
-    h = new Room("h");
-    i = new Room("i");
-    j = new Room("You enter a cozy cottage, a roaring fireplace crackles at the west side of the room, and an oaken table lies in the centre. ", soup, rustedSword);
+        a->addAnimateObject(Hamster);
+        a->addValue(stick);
+        a->addValue(rock);
+    b = new Room("Dining Room: ");
+    c = new Room("Billard Room: ");
+    d = new Room("Hall: ", new Item("Picture", 3, 33));
+    e = new Room("Lounge: ");
+    f = new Room("Ball Room: ", new Item("Microphone", 4, 44));
+    g = new Room("Kitchen: ");
+    h = new Room("Conservatory: ");
+    i = new Room("Study: ");
+    j = new Room("Driveway: ", soup, rustedSword);
 
 //             (N, E, S, W)
     a->setExits(f, b, d, c);
@@ -230,31 +243,38 @@ void MainWindow::go(string direction) {
         //ui->Descriptions->setText("Current Room: "+currentRoom->shortDescription()+"\nNext Room: "+nextRoom->shortDescription());
        currentRoom = nextRoom;
        ui->Descriptions->setText(currentRoom->longDescription()+"\n");
-       if (currentRoom->shortDescription() != "" ){
            //ui->Descriptions->setText("This isn't the main lobby");
-           vector<Item> Items = currentRoom->getItemList();
+       vector<Item> Items = currentRoom->getItemList();
+       ui->ItemList->clear();
+       ui->CharacterList->clear();
+       for(int i = 0; i < currentRoom->numberOfItems(); i++)
+           ui->ItemList->addItem(Items[i].shortDescription());
+       if (MainLobby *temp = dynamic_cast<MainLobby*>(currentRoom)){
            ui->ItemList->clear();
-           for(int i = 0; i < currentRoom->numberOfItems(); i++)
-               ui->ItemList->addItem(Items[i].getShortDescription());
+           vector<Character> Characters = temp->getCharacterList();
+           vector<Item> ItemsA = temp->getItemList();
+           ui->Descriptions->setText(temp->longDescription()+"\n");
+           for(int i = 0; i < temp->numberOfCharacters(); i++){
+               ui->CharacterList->addItem(Characters[i].shortDescription());
+               if(i < temp->numberOfItems())
+                   ui->ItemList->addItem(ItemsA[i].shortDescription());
+           }
        }
-       else{
-           MainLobby *CurrentRoom = a;
-           vector<Character> Characters = CurrentRoom->getCharacterList();
-           ui->Descriptions->setText(CurrentRoom->longDescription()+"\n");
-           ui->ItemList->clear();
-           for(int i = 0; i < CurrentRoom->numberOfCharacters(); i++)
-               ui->ItemList->addItem(Characters[i].shortDescription());
-       }
+       DoorNoise;
     }
 }
 
 void MainWindow::MainLobbyMethod(Character *suspect){
     ui->GameWidget->setCurrentIndex(3);
     ui->DialogueBox->setText(suspect->getDialogue(0));
+    QPixmap pix(suspect->getCharacterPic());
+    int w = ui->label->width();
+    int h = ui->label->height();
+    ui->ProfilePic->setPixmap(pix.scaled(w/2, h/2, Qt::KeepAspectRatio));
 }
 
 QString MainWindow::readFile(QString fileLocation){
-    QString ret = "";
+    ret = "";
     QFile file(fileLocation);
     if (!file.exists())
         qDebug() << file.fileName() << "does not exist";
@@ -275,12 +295,13 @@ QString MainWindow::readFile(QString fileLocation){
     return ret;
 }
 
-void MainWindow::createInventory(){
-    #ifdef InventorySize
+void MainWindow::createInventory()
+{
+#ifdef InventorySize
     Item Inventory[InventorySize];
-    Item inven, temp1, temp2, temp3, temp4, temp5;
-     inven = Item("Inventory", 10, 10);
-        inven.setLongDescription("This is your Inventory, click on an Item to examine it!");
+    Item temp0, temp1, temp2, temp3, temp4;
+     temp0 = Item("Inventory", 10, 10);
+        temp0.setLongDescription("This is your Inventory, click on an Item to examine it!");
     temp1 =  Item("You shouldnt be looking at this",10, 10);
         temp1.setLongDescription("You shouldnt be able to see this");
     temp2 = Item("You shouldnt be looking at this",10, 10);
@@ -289,44 +310,60 @@ void MainWindow::createInventory(){
          temp3.setLongDescription("You shouldnt be able to see this");
     temp4 =  Item("You shouldnt be looking at this",10, 10);
          temp4.setLongDescription("You shouldnt be able to see this");
-    temp5 =  Item("You shouldnt be looking at this",10, 10);
-        temp5.setLongDescription("You shouldnt be able to see this");
-    Inventory[0] = inven;
+
+    Inventory[0] = temp0;
     Inventory[1] = temp1;
     Inventory[2] = temp2;
     Inventory[3] = temp3;
     Inventory[4] = temp4;
-    Inventory[5] = temp5;
+
+    counter = 0;
 
     #endif
 }
 
 
-namespace Victim{
-    QString setText(QString input)
-    {
-        input = "The Victim was the young master of the house. Body has multiple stab wounds but no signs of a struggle.";
-        return input;
-    }
-}
-
-namespace MC{
-    QString setText(QString input)
-    {
-        input = "You are Gruff McSaderton. The best detective in <INSERT CITY HERE>";
-        return input;
-    }
-}
-void MainWindow::on_VicButton_clicked()
+void MainWindow::on_takeButton_clicked()
 {
-    QString input;
-    ui->Descriptions->setText(Victim::setText(input));
-}
+    ptr = Inventory;
+    if(counter == 5)
+    {
+       ui->Descriptions->setText("Inventory is full!");
+       return;
+    }
+    exists = false;
+    Items = currentRoom->getItemList();
+    for(int i = 0; i < counter; i++)
+    {
+        if((ptr+i)->shortDescription() == ui->InventoryList->currentText())
+        {
+            exists = true;
+        }
+
+    }
+    if(exists == false){
+        for(int x = 0; x < (int)Items.size(); x++){
+            if(Items[x].shortDescription() == ui->ItemList->currentText()) {
+                Inventory[counter] = Items[x];
+                ui->InventoryList->addItem(Inventory[counter].shortDescription());
+                ptr = &Inventory[counter];
+                currentRoom->removeItemFromRoom(ptr);
+                counter++;
+                ui->MainGame->update();
+                }
+            }
+        }
+    }
 
 
-void MainWindow::on_MCButton_clicked()
+
+void MainWindow::on_VictimInfo_clicked()
 {
-    QString input;
-    ui->Descriptions->setText(MC::setText(input));
+
+    ui->Descriptions->setText(Victim::setText(output));
 }
 
+void MainWindow::on_CharacterInfo_clicked()
+{
+    ui->Descriptions->setText(MC::setText(output));
+}

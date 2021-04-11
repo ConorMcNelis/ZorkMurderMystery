@@ -14,9 +14,15 @@
 #include "item.h"
 #include "Character.h"
 #include "main.h"
+#include "animateobject.h"
+#include "map.h"
+#include "accusationcheck.h"
 #include <iostream>
 #include <QString>
-#define InventorySize (6)
+#include <QSound>
+#define InventorySize (5)
+#define DoorNoise QSound::play("://door_creak_closing.wav")
+
 using namespace std;
 
 QT_BEGIN_NAMESPACE
@@ -36,8 +42,20 @@ public:
     Character *currentCharacter;
    // MainCharacter *player;
 
+
+    template <class T>
+    void bubbleSort(T a[], int n) {
+        for (int i = 0; i < n - 1; i++)
+            for (int j = n - 1; i < j; j--)
+                if (a[j] < a[j - 1] && a[j] != "" && a[j-1] != "")
+                  swap(a[j], a[j - 1]);
+    }
+
+
 private:
     Ui::MainWindow *ui;
+    Map *map;
+    AccusationCheck *check;
 
 private slots:
 
@@ -57,6 +75,8 @@ private slots:
 
     void on_GoSouthButton_clicked();
 
+    void on_TalkButton_clicked();
+
     void on_ExamineButton_clicked();
 
     void on_Option1_clicked();
@@ -69,19 +89,33 @@ private slots:
 
     void on_InventoryList_activated(const QString &arg1);
 
-    void on_VicButton_clicked();
+    void on_OpenMapButton_clicked();
 
-    void on_MCButton_clicked();
+    void on_AccuseButton_clicked();
+
+    void on_takeButton_clicked();
+
+    void on_VictimInfo_clicked();
+
+    void on_CharacterInfo_clicked();
 
 protected:
 
     vector<Item> Items;
-    vector<Item> AllItems;
     vector<Character> Characters;
     vector<Character>::iterator it;
+    #ifdef InventorySize
     Item Inventory[InventorySize];
-    Item *ptr;
-    int counter : 4;
+    Item *ptr = Inventory;
+    int counter :4;
+    #endif
+    union
+    {
+        QString output;
+        bool exists;
+        QString ret;
+    };
+
     void createRooms();
     void printWelcome();
     void printHelp();
@@ -89,10 +123,9 @@ protected:
     void displayItems();
     void createCharacters();
     void displayCharacters();
+    void createInventory();
     void go(string direction);
     void MainLobbyMethod(Character *suspect);
-    void createInventory();
     QString readFile(QString fileLocation);
-
 };
 #endif // MAINWINDOW_H

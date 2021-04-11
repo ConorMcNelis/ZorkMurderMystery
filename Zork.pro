@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,21 +14,32 @@ SOURCES += \
     MainCharacter.cpp \
     MainLobby.cpp \
     Room.cpp \
+    accusationcheck.cpp \
+    animateobject.cpp \
+    interface.cpp \
     item.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    map.cpp
 
 HEADERS += \
     Character.h \
     MainCharacter.h \
     MainLobby.h \
     Room.h \
+    accusationcheck.h \
+    animateobject.h \
+    array.h \
+    interface.h \
     item.h \
     main.h \
-    mainwindow.h
+    mainwindow.h \
+    map.h
 
 FORMS += \
-    mainwindow.ui
+    accusationcheck.ui \
+    mainwindow.ui \
+    map.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

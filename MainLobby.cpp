@@ -1,19 +1,28 @@
 #include "MainLobby.h"
 
-MainLobby::MainLobby(QString inDescription, Item *newItem, Item *newItem2)
-    : Room {newItem, newItem2},
-        description(inDescription)
+MainLobby::MainLobby(QString inDescription)
+        :description(inDescription)
 {
 
 }
 
+MainLobby::~MainLobby(){
+    vector<Character>().swap(CharactersInRoom);
+}
+
 QString MainLobby::shortDescription(){
-    return "Butt";
+    return description;
 }
 
 void MainLobby::addCharacter(Character *character){
     CharactersInRoom.push_back(*character);
 }
+
+void MainLobby::addAnimateObject(AnimateObject *animateObject){
+    CharactersInRoom.push_back(*animateObject);
+    itemsInRoom.push_back(*animateObject);
+}
+
 
 Character MainLobby::getCharacter(QString name){
     for (int i = 0; i<numberOfCharacters(); i++){
