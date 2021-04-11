@@ -19,7 +19,10 @@
 #include "accusationcheck.h"
 #include <iostream>
 #include <QString>
+#include <QSound>
 #define InventorySize (5)
+#define DoorNoise QSound::play("://door_creak_closing.wav")
+
 using namespace std;
 
 QT_BEGIN_NAMESPACE
@@ -90,16 +93,29 @@ private slots:
 
     void on_AccuseButton_clicked();
 
+    void on_takeButton_clicked();
+
+    void on_VictimInfo_clicked();
+
+    void on_CharacterInfo_clicked();
+
 protected:
 
     vector<Item> Items;
-    vector<Item> AllItems;
     vector<Character> Characters;
     vector<Character>::iterator it;
-    QString Inventory[InventorySize];
-    QString *ptr = Inventory;
+    #ifdef InventorySize
+    Item Inventory[InventorySize];
+    Item *ptr = Inventory;
+    int counter :4;
+    #endif
+    union
+    {
+        QString output;
+        bool exists;
+        QString ret;
+    };
 
-    int counter : 3;
     void createRooms();
     void printWelcome();
     void printHelp();
@@ -107,6 +123,7 @@ protected:
     void displayItems();
     void createCharacters();
     void displayCharacters();
+    void createInventory();
     void go(string direction);
     void MainLobbyMethod(Character *suspect);
     QString readFile(QString fileLocation);

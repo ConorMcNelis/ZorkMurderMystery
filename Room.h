@@ -23,6 +23,7 @@ class Room : public Interface
         Room(QString inDescription, Item *newItem, Item *newItem2);
         Room(Item *newItem, Item *newItem2);
         Room();
+        ~Room();
         bool operator == (const Room& other) const;
         bool operator != (const Room& other) const;
         void setExits(Room *north, Room *east, Room *south, Room *west);
@@ -36,7 +37,7 @@ class Room : public Interface
         QString displayItem();
         int isItemInRoom(QString inQString);
         vector<Item> getItemList();
-        void removeItemFromRoom(int location);
+        void removeItemFromRoom(Item* target);
 };
 
 #endif

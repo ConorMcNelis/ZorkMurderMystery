@@ -3,6 +3,10 @@
 Room::Room(){
 }
 
+Room::~Room(){
+    vector<Item>().swap(itemsInRoom);
+}
+
 Room::Room(QString inDescription)
     :description(inDescription)
 {
@@ -137,5 +141,17 @@ int Room::isItemInRoom(QString inQString)
             }
         }
     return -1;
+}
+
+void Room::removeItemFromRoom(Item* target)
+{
+    for(int i = 0; i < (int)itemsInRoom.size(); i++)
+    {
+        if(itemsInRoom[i].shortDescription() == target->shortDescription())
+        {
+            itemsInRoom.erase(itemsInRoom.begin()+i);
+        }
+    }
+
 }
 

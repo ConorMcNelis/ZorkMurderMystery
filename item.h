@@ -18,6 +18,7 @@ private:
 public:
     Item (QString description, int inWeight, float inValue);
     Item (QString description);
+    Item();
     //Item (const Item& other);
     virtual QString shortDescription();
     virtual void setLongDescription(QString RoomDescription);

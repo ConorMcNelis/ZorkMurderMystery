@@ -14,6 +14,7 @@ class MainLobby : public Room
 
     public:
         MainLobby(QString description);
+        ~MainLobby();
         QString shortDescription() override;
         void addCharacter(Character *character);
         void addAnimateObject(AnimateObject *animateObject);

@@ -6,6 +6,10 @@ MainLobby::MainLobby(QString inDescription)
 
 }
 
+MainLobby::~MainLobby(){
+    vector<Character>().swap(CharactersInRoom);
+}
+
 QString MainLobby::shortDescription(){
     return description;
 }
@@ -18,6 +22,7 @@ void MainLobby::addAnimateObject(AnimateObject *animateObject){
     CharactersInRoom.push_back(*animateObject);
     itemsInRoom.push_back(*animateObject);
 }
+
 
 Character MainLobby::getCharacter(QString name){
     for (int i = 0; i<numberOfCharacters(); i++){

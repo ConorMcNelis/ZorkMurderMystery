@@ -11,6 +11,11 @@ Item::Item(QString inDescription)
 {
 
 }
+Item::Item()
+{
+
+}
+
 
 /*
 Item::Item(const Item& other)
