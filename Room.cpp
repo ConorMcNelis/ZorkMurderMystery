@@ -7,6 +7,7 @@ Room::~Room(){
     vector<Item>().swap(itemsInRoom);
 }
 
+
 Room::Room(QString inDescription)
     :description(inDescription)
 {
@@ -31,6 +32,8 @@ Room::Room(Item *newItem, Item *newItem2)
     itemsInRoom.push_back(*newItem);
     itemsInRoom.push_back(*newItem2);
 }
+
+
 
 bool Room::operator == (const Room& other) const{
     return description == other.description;
@@ -70,8 +73,10 @@ void Room:: setLongDescription(QString RoomDescription){
 }
 
 QString Room::longDescription() {
-    QString plusItemsDescription = shortDescription();
-    plusItemsDescription = Add(plusItemsDescription, itemsInRoom);
+    QString plusItemsDescription = shortDescription() + LongDescription;
+    //plusItemsDescription = Add(plusItemsDescription, itemsInRoom);
+    for (int i = 0; i < (int)itemsInRoom.size(); i++)
+        plusItemsDescription = plusItemsDescription + itemsInRoom[i].longDescription();
     return "room = " + plusItemsDescription + "\n" + displayItem() + exitString();
 }
 
@@ -97,6 +102,15 @@ void Room::addValue(Item *inItem) {
     //cout << "Just added" + inItem->longDescription();
     itemsInRoom.push_back(*inItem);
 }
+
+void Room::removeItemFromRoom(Item *inItem){
+    for(int i = 0; i < (int)itemsInRoom.size(); i++){
+        if(inItem->shortDescription() == itemsInRoom[i].shortDescription())
+            itemsInRoom.erase(itemsInRoom.begin()+i);
+    }
+
+}
+
 
 QString Room::displayItem() {
     QString tempQString = "items in room = ";
@@ -141,17 +155,5 @@ int Room::isItemInRoom(QString inQString)
             }
         }
     return -1;
-}
-
-void Room::removeItemFromRoom(Item* target)
-{
-    for(int i = 0; i < (int)itemsInRoom.size(); i++)
-    {
-        if(itemsInRoom[i].shortDescription() == target->shortDescription())
-        {
-            itemsInRoom.erase(itemsInRoom.begin()+i);
-        }
-    }
-
 }
 

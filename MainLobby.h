@@ -13,8 +13,7 @@ class MainLobby : public Room
         friend class mainwindow;
 
     public:
-        MainLobby(QString description);
-        ~MainLobby();
+        MainLobby(QString description, Item *newItem, Item *newItem2);
         QString shortDescription() override;
         void addCharacter(Character *character);
         void addAnimateObject(AnimateObject *animateObject);
