@@ -11,19 +11,18 @@ Item::Item(QString inDescription)
 {
 
 }
-Item::Item()
-{
 
-}
+Item::Item(){
+
+};
 
 
-/*
 Item::Item(const Item& other)
     : description(other.description)
 {
-
+    setLongDescription(other.LongItemDescription);
 }
-*/
+
 
 void Item::setWeight(int inWeightGrams)
 {
@@ -38,22 +37,22 @@ void Item::setValue(float inValue)
     if (inValue > 9999 || inValue < 0)
        cout << "value invalid, must be 0<value<9999" ;
     else
-	   value = inValue;
+       value = inValue;
 }
 
 QString Item::shortDescription()
 {
-	return description;
+    return description;
 }
 
-void Item::setLongDescription(QString RoomDescription)
+void Item::setLongDescription(QString ItemDescription)
 {
-    LongDescription = RoomDescription;
+    LongItemDescription = ItemDescription;
 }
 
 QString Item::longDescription()
 {
-    return LongDescription;
+    return LongItemDescription;
 }
 
 void Item::setExamination(QString examinationString)
@@ -66,4 +65,19 @@ QString Item::getExamination()
     return Examination;
 }
 
+bool Item::operator < (const Item& other) const{
+    return description < other.description;
+}
+
+bool Item::operator > (const Item& other) const{
+    return description > other.description;
+}
+
+bool Item::operator == (const QString& other) const{
+    return description == other;
+}
+
+bool Item::operator != (const QString& other) const{
+    return description != other;
+}
 

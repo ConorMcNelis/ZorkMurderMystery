@@ -9,9 +9,9 @@ QString Character::shortDescription(){
     return description;
 }
 
-void Character::setLongDescription(QString RoomDescription)
+void Character::setLongDescription(QString CharacterDescription)
 {
-    LongDescription = RoomDescription;
+    LongDescription = CharacterDescription;
 }
 
 QString Character::longDescription(){
